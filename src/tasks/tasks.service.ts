@@ -5,10 +5,13 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class TasksService {
   constructor(private prisma: PrismaService) {}
 
-  updateStatus(uuid: string, status: string) {
-    return this.prisma.tasks.update({
+  async updateStatus(uuid: string, status: string) {
+    const task = this.prisma.tasks.update({
       where: { id: uuid },
       data: { status },
     });
+    await this.prisma.$disconnect();
+
+    return task;
   }
 }

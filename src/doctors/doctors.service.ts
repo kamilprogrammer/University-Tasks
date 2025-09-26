@@ -5,8 +5,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class DoctorsService {
   constructor(private prisma: PrismaService) {}
 
-  getData(uuid: string) {
-    return this.prisma.doctors.findUnique({
+  async getData(uuid: string) {
+    const doctor = this.prisma.doctors.findUnique({
       where: { id: uuid },
       include: {
         doctor_students: {
@@ -15,5 +15,8 @@ export class DoctorsService {
         },
       },
     });
+    await this.prisma.$disconnect();
+
+    return doctor;
   }
 }
