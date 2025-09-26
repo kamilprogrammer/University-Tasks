@@ -6,7 +6,7 @@ export class DoctorsService {
   constructor(private prisma: PrismaService) {}
 
   async getData(uuid: string) {
-    const doctor = this.prisma.doctors.findUnique({
+    const doctor = await this.prisma.doctors.findUnique({
       where: { id: uuid },
       include: {
         doctor_students: {

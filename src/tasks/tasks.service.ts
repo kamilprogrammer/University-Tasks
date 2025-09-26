@@ -6,7 +6,7 @@ export class TasksService {
   constructor(private prisma: PrismaService) {}
 
   async updateStatus(uuid: string, status: string) {
-    const task = this.prisma.tasks.update({
+    const task = await this.prisma.tasks.update({
       where: { id: uuid },
       data: { status },
     });
@@ -21,7 +21,7 @@ export class TasksService {
     doctor_id: string,
     student_id: string,
   ) {
-    const task = this.prisma.tasks.create({
+    const task = await this.prisma.tasks.create({
       data: {
         title,
         description,
