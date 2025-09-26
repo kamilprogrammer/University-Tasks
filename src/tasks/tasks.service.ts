@@ -14,4 +14,24 @@ export class TasksService {
 
     return task;
   }
+
+  async addTask(
+    title: string,
+    description: string,
+    doctor_id: string,
+    student_id: string,
+  ) {
+    const task = this.prisma.tasks.create({
+      data: {
+        title,
+        description,
+        doctor_id,
+        student_id,
+        status: 'pending',
+      },
+    });
+    await this.prisma.$disconnect();
+
+    return task;
+  }
 }
