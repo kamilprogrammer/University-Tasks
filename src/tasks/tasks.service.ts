@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class TasksService {
@@ -24,7 +23,6 @@ export class TasksService {
   ) {
     const task = await this.prisma.tasks.create({
       data: {
-        id: uuidv4(),
         title,
         description,
         doctor_id,
