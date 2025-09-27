@@ -16,14 +16,12 @@ export class TasksController {
     task: {
       title: string;
       description: string;
-      doctor_id: string;
       student_id: string;
     },
   ) {
     return this.tasksService.addTask(
       task.title,
       task.description,
-      task.doctor_id,
       task.student_id,
     );
   }

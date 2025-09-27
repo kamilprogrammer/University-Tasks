@@ -15,17 +15,11 @@ export class TasksService {
     return task;
   }
 
-  async addTask(
-    title: string,
-    description: string,
-    doctor_id: string,
-    student_id: string,
-  ) {
+  async addTask(title: string, description: string, student_id: string) {
     const task = await this.prisma.tasks.create({
       data: {
         title,
         description,
-        doctor_id,
         student_id,
         status: 'pending',
       },
