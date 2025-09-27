@@ -9,10 +9,7 @@ export class DoctorsService {
     const doctor = await this.prisma.doctors.findUnique({
       where: { id: uuid },
       include: {
-        doctor_students: {
-          include: { students: { include: { tasks: true } } },
-          omit: { doctor_id: true, student_id: true },
-        },
+        students: { include: { tasks: true } },
       },
     });
     await this.prisma.$disconnect();
