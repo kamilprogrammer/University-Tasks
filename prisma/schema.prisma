@@ -30,6 +30,7 @@ model doctors {
 
 model students {
   id              String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  unique_id       String            @db.VarChar @default(dbgenerated("gen_student_id()"))
   name            String            @db.VarChar
   email           String?           @db.VarChar
   created_at      DateTime          @default(now()) @db.Timestamptz(6)
