@@ -6,11 +6,6 @@ export class DoctorsController {
   constructor(private readonly doctorsService: DoctorsService) {}
 
   @Get(':uuid')
-  getData(@Param('uuid') uuid: string) {
-    return this.doctorsService.getData(uuid);
-  }
-
-  @Get(':uuid')
   getAllData(@Param('uuid') uuid: string) {
     if (uuid == '1a6ca25e-4f41-4d19-9e7e-0acab5cfa1b1') {
       return this.doctorsService.getAllData();
