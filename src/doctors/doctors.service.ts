@@ -7,14 +7,12 @@ export class DoctorsService {
 
   async getData(uuid: string) {
     try {
-      const idk = await this.prisma.doctors.findUnique({
+      return await this.prisma.doctors.findUnique({
         where: { id: uuid },
         include: {
           students: { include: { tasks: true } },
         },
       });
-      console.log('Idk: ', idk);
-      return idk;
     } catch (err) {
       if (err.code === 'P1001') {
         console.warn('Lost DB connection, retrying...');

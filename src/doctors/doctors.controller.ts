@@ -1,5 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { DoctorsService } from './doctors.service';
+import { env } from 'process';
 
 @Controller('doctors')
 export class DoctorsController {
@@ -7,7 +8,7 @@ export class DoctorsController {
 
   @Get(':uuid')
   getAllData(@Param('uuid') uuid: string) {
-    if (uuid == '1a6ca25e-4f41-4d19-9e7e-0acab5cfa1b1') {
+    if (uuid == env.ADMIN) {
       return this.doctorsService.getAllData();
     }
     return this.doctorsService.getData(uuid);
