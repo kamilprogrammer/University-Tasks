@@ -9,4 +9,9 @@ export class DoctorsController {
   getData(@Param('uuid') uuid: string) {
     return this.doctorsService.getData(uuid);
   }
+
+  @Get()
+  getAllData() {
+    return this.doctorsService.getAllData();
+  }
 }
