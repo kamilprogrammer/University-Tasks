@@ -27,10 +27,9 @@ export class DoctorsService {
     try {
       const idk = await this.prisma.doctors.findMany({
         include: {
-          students: { include: { tasks: true } },
+          students: { include: { doctor: {select: {domain: true}}, tasks: true} },
         },
       });
-      console.log('Idk: ', idk);
       return idk;
     } catch (err) {
       if (err.code === 'P1001') {
@@ -42,4 +41,37 @@ export class DoctorsService {
       throw err;
     }
   }
+  async getAllDomains() {
+    try {
+      const idk = await this.prisma.doctors.findMany({
+        select: { domain: true, students: {include: {tasks: true}} },
+      });
+      
+      const domainAcheivements = [...new Map(idk.map(domain => [domain.domain, {
+        domain: domain.domain,
+        acheivement: (idk
+          .filter(d => d.domain === domain.domain)
+          .flatMap(d => d.students)
+          .flatMap(s => s.tasks)
+          .filter(t => t.status === 'done').length /
+          idk
+            .filter(d => d.domain === domain.domain)            
+            .flatMap(d => d.students)
+            .flatMap(s => s.tasks).length) *
+          100
+      }])).values()].filter(domain => domain.domain !== null);
+
+      console.log("IDK.. ", domainAcheivements)
+      return  domainAcheivements;
+    } catch (err) {
+      if (err.code === 'P1001') {
+        console.warn('Lost DB connection, retrying...');
+        await this.prisma.$disconnect();
+        await this.prisma.$connect();
+        return this.getAllDomains();
+      }
+      throw err;
+    }
+  }
+
 }

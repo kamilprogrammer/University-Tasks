@@ -6,6 +6,11 @@ import { env } from 'process';
 export class DoctorsController {
   constructor(private readonly doctorsService: DoctorsService) {}
 
+  @Get('domains')
+  getAllDomains() {
+    return this.doctorsService.getAllDomains();
+  }
+
   @Get(':uuid')
   getAllData(@Param('uuid') uuid: string) {
     if (uuid == env.ADMIN) {
@@ -13,4 +18,5 @@ export class DoctorsController {
     }
     return this.doctorsService.getData(uuid);
   }
+
 }
